@@ -24,6 +24,7 @@
   table { border-collapse: collapse; width: 100%; font-size: .875rem; white-space: nowrap; }
   th, td { text-align: right; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
   th { color: var(--muted); font-weight: 600; }
+  th[data-sort] { cursor: pointer; user-select: none; }
   th:nth-child(-n+3), td:nth-child(-n+3) { text-align: left; }
   tbody tr:nth-child(odd) { background: var(--row); }
   tbody tr:first-child td { color: var(--accent); font-weight: 600; }
@@ -33,7 +34,7 @@
 </head>
 <body>
 <h1>Backup object-storage cost calculator</h1>
-<p class="muted">List prices, USD. Storage + full-restore economics per provider/tier, sorted by yearly total.
+<p class="muted">List prices, USD. Storage + full-restore economics per provider/tier, sorted by yearly total — click a price column to re-sort.
    Prices updated: <span id="updated">…</span>.</p>
 
 <div class="controls">
@@ -51,7 +52,7 @@
 <div class="table-wrap"><table>
   <thead><tr>
     <th>Provider</th><th>Tier</th><th>Region</th>
-    <th>$/GB/mo</th><th>Storage $/mo</th><th>One restore $</th><th>Year total $</th>
+    <th data-sort="price">$/GB/mo</th><th data-sort="storageMo">Storage $/mo</th><th data-sort="restore">One restore $</th><th data-sort="year">Year total $</th>
     <th>Min days</th><th>WORM</th>
   </tr></thead>
   <tbody id="rows"></tbody>
@@ -75,6 +76,7 @@ const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
 const auto = /^(Europe|Africa)\//.test(tz) ? 'EU' : /^(Asia|Australia|Pacific|Indian)\//.test(tz) ? 'AP' : 'US';
 
 let data;
+let sort = { key: 'year', dir: 1 };
 function render() {
   const tb = +document.getElementById('tb').value || 0;
   const restores = +document.getElementById('restores').value || 0;
@@ -96,7 +98,9 @@ function render() {
       });
     }
   }
-  rows.sort((a, b) => a.year - b.year);
+  rows.sort((a, b) => sort.dir * (a[sort.key] - b[sort.key]));
+  for (const th of document.querySelectorAll('th[data-sort]'))
+    th.textContent = th.textContent.replace(/ [▲▼]$/, '') + (th.dataset.sort === sort.key ? (sort.dir === 1 ? ' ▲' : ' ▼') : '');
 
   document.getElementById('rows').innerHTML = rows.map((r) => `<tr>
     <td>${r.provider}</td><td>${r.tier}</td><td>${r.region}</td>
@@ -112,6 +116,10 @@ fetch('prices.json').then((r) => r.json()).then((j) => {
   document.getElementById('notes').innerHTML =
     Object.values(j.providers).filter((p) => p.note).map((p) => `<li><b>${p.label}:</b> ${p.note}</li>`).join('');
   for (const el of document.querySelectorAll('input, select')) el.addEventListener('input', render);
+  for (const th of document.querySelectorAll('th[data-sort]')) th.addEventListener('click', () => {
+    sort = { key: th.dataset.sort, dir: th.dataset.sort === sort.key ? -sort.dir : 1 };
+    render();
+  });
   render();
 });
 </script>
