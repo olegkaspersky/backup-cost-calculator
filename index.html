@@ -65,7 +65,10 @@
 <footer>
   <ul id="notes"></ul>
   <ul>
-    <li>1 TB = 1024 GB. One restore = retrieval + internet-egress fees on the full stored volume (first-tier egress rate; free-egress allowances applied).</li>
+    <li>Units are binary: 1 TB here = 1024 GB (i.e. TiB/GiB) — matching how providers meter storage
+        (AWS bills GB as 2<sup>30</sup> bytes, GCS prices are per GiB-month, Azure bills per GiB) and how backup
+        tools report sizes. One restore = retrieval + internet-egress fees on the full stored volume
+        (first-tier egress rate; free-egress allowances applied).</li>
     <li>API/request costs excluded — negligible for backup workloads (large objects, few requests).</li>
     <li>Early deletion below the tier minimum bills the remaining days. Archive tiers add retrieval latency (hours–48 h).</li>
     <li>WORM = Object Lock / immutability support for the ransomware-proof COLD copy.</li>
