@@ -38,8 +38,12 @@
    Prices updated: <span id="updated">…</span>.</p>
 
 <div class="controls">
-  <div><label for="tb">Data stored, TB</label><input id="tb" type="number" min="0.1" step="0.5" value="1"></div>
+  <div><label for="size">Data stored</label>
+    <input id="size" type="number" min="0" step="any" value="1" style="width:5.5rem">
+    <select id="unit" style="width:4.5rem"><option>MB</option><option>GB</option><option selected>TB</option><option>PB</option></select>
+  </div>
   <div><label for="restores">Full restores / year (drills + DR)</label><input id="restores" type="number" min="0" step="1" value="4"></div>
+  <div><label for="disc">Commitment discount, % (storage)</label><input id="disc" type="number" min="0" max="90" step="1" value="0"></div>
   <div><label for="group">Nearest region</label>
     <select id="group">
       <option value="US">US</option>
@@ -65,6 +69,9 @@
     <li>API/request costs excluded — negligible for backup workloads (large objects, few requests).</li>
     <li>Early deletion below the tier minimum bills the remaining days. Archive tiers add retrieval latency (hours–48 h).</li>
     <li>WORM = Object Lock / immutability support for the ransomware-proof COLD copy.</li>
+    <li>Commitment discount applies to storage only — retrieval/egress are never covered. Public committed-use
+        pricing exists only for Azure Blob reserved capacity (100 TB / 1 PB units, 1- or 3-year, up to ~38% off);
+        AWS and GCP storage commitments (EDP, storage growth plan) are negotiated contracts with no list prices.</li>
   </ul>
 </footer>
 
@@ -78,21 +85,23 @@ const auto = /^(Europe|Africa)\//.test(tz) ? 'EU' : /^(Asia|Australia|Pacific|In
 let data;
 let sort = { key: 'year', dir: 1 };
 function render() {
-  const tb = +document.getElementById('tb').value || 0;
+  const UNITS = { MB: 1 / 1024, GB: 1, TB: 1024, PB: 1024 ** 2 };
+  const size = +document.getElementById('size').value || 0;
   const restores = +document.getElementById('restores').value || 0;
   const group = document.getElementById('group').value;
-  const gb = tb * 1024;
+  const disc = 1 - Math.min(Math.max(+document.getElementById('disc').value || 0, 0), 90) / 100;
+  const gb = size * UNITS[document.getElementById('unit').value];
 
   const rows = [];
   for (const p of Object.values(data.providers)) {
     const regions = Object.entries(p.regions);
     const [regionKey, region] = regions.find(([, r]) => r.group === group) ?? regions[0];
     for (const t of Object.values(region.tiers)) {
-      const storageMo = gb * t.storage_gb_mo;
+      const storageMo = gb * t.storage_gb_mo * disc;
       const restore = gb * (t.retrieval_gb + region.egress_gb);
       rows.push({
         provider: p.label, tier: t.label, region: region.label,
-        price: t.storage_gb_mo, storageMo, restore,
+        price: t.storage_gb_mo * disc, storageMo, restore,
         year: 12 * storageMo + restores * restore,
         minDays: t.min_days, lock: t.object_lock === true ? '✔' : t.object_lock || '—',
       });
@@ -104,7 +113,7 @@ function render() {
 
   document.getElementById('rows').innerHTML = rows.map((r) => `<tr>
     <td>${r.provider}</td><td>${r.tier}</td><td>${r.region}</td>
-    <td>${r.price}</td><td>${fmt(r.storageMo)}</td><td>${fmt(r.restore)}</td><td><b>${fmt(r.year)}</b></td>
+    <td>${+r.price.toFixed(6)}</td><td>${fmt(r.storageMo)}</td><td>${fmt(r.restore)}</td><td><b>${fmt(r.year)}</b></td>
     <td>${r.minDays || '—'}</td><td>${r.lock}</td>
   </tr>`).join('');
 }
