@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-10",
+  "updated": "2026-07-21",
   "providers": {
     "aws": {
       "label": "AWS S3",
@@ -291,7 +291,7 @@
             },
             "archive": {
               "label": "Archive",
-              "storage_gb_mo": 0.0012,
+              "storage_gb_mo": 0.0014,
               "retrieval_gb": 0.05,
               "min_days": 365,
               "object_lock": true
@@ -319,7 +319,7 @@
             },
             "coldline": {
               "label": "Coldline",
-              "storage_gb_mo": 0.004,
+              "storage_gb_mo": 0.0044,
               "retrieval_gb": 0.02,
               "min_days": 90,
               "object_lock": true
