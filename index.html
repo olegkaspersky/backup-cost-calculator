@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backup object-storage cost calculator</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #6b7280; --line: #e5e7eb;
+    --accent: #2563eb; --row: #f9fafb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111418; --fg: #e5e7eb; --muted: #9ca3af; --line: #2d333b; --accent: #60a5fa; --row: #1a1f26; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0 auto; max-width: 1080px; padding: 2rem 1rem 4rem; background: var(--bg); color: var(--fg);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size: 1.5rem; } .muted { color: var(--muted); font-size: .875rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0; align-items: end; }
+  label { display: block; font-size: .8rem; color: var(--muted); margin-bottom: .25rem; }
+  input, select { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line);
+                  border-radius: 6px; padding: .4rem .6rem; width: 9rem; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .875rem; white-space: nowrap; }
+  th, td { text-align: right; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  th:nth-child(-n+3), td:nth-child(-n+3) { text-align: left; }
+  tbody tr:nth-child(odd) { background: var(--row); }
+  tbody tr:first-child td { color: var(--accent); font-weight: 600; }
+  footer { margin-top: 2rem; font-size: .8rem; color: var(--muted); }
+  footer li { margin: .2rem 0; }
+</style>
+</head>
+<body>
+<h1>Backup object-storage cost calculator</h1>
+<p class="muted">List prices, USD. Storage + full-restore economics per provider/tier, sorted by yearly total.
+   Prices updated: <span id="updated">…</span>.</p>
+
+<div class="controls">
+  <div><label for="tb">Data stored, TB</label><input id="tb" type="number" min="0.1" step="0.5" value="1"></div>
+  <div><label for="restores">Full restores / year (drills + DR)</label><input id="restores" type="number" min="0" step="1" value="4"></div>
+  <div><label for="group">Nearest region</label>
+    <select id="group">
+      <option value="US">US</option>
+      <option value="EU">EU</option>
+      <option value="AP">Asia-Pacific</option>
+    </select>
+  </div>
+</div>
+
+<div class="table-wrap"><table>
+  <thead><tr>
+    <th>Provider</th><th>Tier</th><th>Region</th>
+    <th>$/GB/mo</th><th>Storage $/mo</th><th>One restore $</th><th>Year total $</th>
+    <th>Min days</th><th>WORM</th>
+  </tr></thead>
+  <tbody id="rows"></tbody>
+</table></div>
+
+<footer>
+  <ul id="notes"></ul>
+  <ul>
+    <li>1 TB = 1024 GB. One restore = retrieval + internet-egress fees on the full stored volume (first-tier egress rate; free-egress allowances applied).</li>
+    <li>API/request costs excluded — negligible for backup workloads (large objects, few requests).</li>
+    <li>Early deletion below the tier minimum bills the remaining days. Archive tiers add retrieval latency (hours–48 h).</li>
+    <li>WORM = Object Lock / immutability support for the ransomware-proof COLD copy.</li>
+  </ul>
+</footer>
+
+<script>
+const fmt = (n) => n.toLocaleString('en-US', { maximumFractionDigits: n < 10 ? 2 : 0 });
+
+// Nearest region group from the browser timezone; crude on purpose - user can override.
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+const auto = /^(Europe|Africa)\//.test(tz) ? 'EU' : /^(Asia|Australia|Pacific|Indian)\//.test(tz) ? 'AP' : 'US';
+
+let data;
+function render() {
+  const tb = +document.getElementById('tb').value || 0;
+  const restores = +document.getElementById('restores').value || 0;
+  const group = document.getElementById('group').value;
+  const gb = tb * 1024;
+
+  const rows = [];
+  for (const p of Object.values(data.providers)) {
+    const regions = Object.entries(p.regions);
+    const [regionKey, region] = regions.find(([, r]) => r.group === group) ?? regions[0];
+    for (const t of Object.values(region.tiers)) {
+      const storageMo = gb * t.storage_gb_mo;
+      const restore = gb * (t.retrieval_gb + region.egress_gb);
+      rows.push({
+        provider: p.label, tier: t.label, region: region.label,
+        price: t.storage_gb_mo, storageMo, restore,
+        year: 12 * storageMo + restores * restore,
+        minDays: t.min_days, lock: t.object_lock === true ? '✔' : t.object_lock || '—',
+      });
+    }
+  }
+  rows.sort((a, b) => a.year - b.year);
+
+  document.getElementById('rows').innerHTML = rows.map((r) => `<tr>
+    <td>${r.provider}</td><td>${r.tier}</td><td>${r.region}</td>
+    <td>${r.price}</td><td>${fmt(r.storageMo)}</td><td>${fmt(r.restore)}</td><td><b>${fmt(r.year)}</b></td>
+    <td>${r.minDays || '—'}</td><td>${r.lock}</td>
+  </tr>`).join('');
+}
+
+fetch('prices.json').then((r) => r.json()).then((j) => {
+  data = j;
+  document.getElementById('updated').textContent = j.updated;
+  document.getElementById('group').value = auto;
+  document.getElementById('notes').innerHTML =
+    Object.values(j.providers).filter((p) => p.note).map((p) => `<li><b>${p.label}:</b> ${p.note}</li>`).join('');
+  for (const el of document.querySelectorAll('input, select')) el.addEventListener('input', render);
+  render();
+});
+</script>
+</body>
+</html>

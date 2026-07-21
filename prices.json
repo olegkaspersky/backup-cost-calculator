@@ -1,0 +1,602 @@
+{
+  "updated": "2026-07-10",
+  "providers": {
+    "aws": {
+      "label": "AWS S3",
+      "note": "First 100 GB/mo egress to internet free (account-wide). Glacier tiers: retrieval latency minutes–48 h by class.",
+      "regions": {
+        "us-east-1": {
+          "label": "US East (N. Virginia)",
+          "group": "US",
+          "egress_gb": 0.09,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.023,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0125,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.004,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "us-west-2": {
+          "label": "US West (Oregon)",
+          "group": "US",
+          "egress_gb": 0.09,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.023,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0125,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.004,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "eu-west-1": {
+          "label": "Europe (Ireland)",
+          "group": "EU",
+          "egress_gb": 0.09,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.023,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0125,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.004,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "eu-central-1": {
+          "label": "Europe (Frankfurt)",
+          "group": "EU",
+          "egress_gb": 0.09,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.0245,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0135,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.005,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.00405,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "ap-southeast-1": {
+          "label": "Asia Pacific (Singapore)",
+          "group": "AP",
+          "egress_gb": 0.12,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.025,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0138,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.005,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.0045,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "ap-northeast-1": {
+          "label": "Asia Pacific (Tokyo)",
+          "group": "AP",
+          "egress_gb": 0.114,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.025,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "standard_ia": {
+              "label": "Standard-IA",
+              "storage_gb_mo": 0.0138,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "glacier_ir": {
+              "label": "Glacier Instant Retrieval",
+              "storage_gb_mo": 0.005,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "glacier_flexible": {
+              "label": "Glacier Flexible Retrieval",
+              "storage_gb_mo": 0.0045,
+              "retrieval_gb": 0.01,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "deep_archive": {
+              "label": "Glacier Deep Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        }
+      }
+    },
+    "gcs": {
+      "label": "Google Cloud Storage",
+      "note": "Egress tiered: 0.12 (0–10 TB/mo) / 0.11 (10–150 TB) / 0.08 (150 TB+); first-tier rate used. More regions: set GCP_API_KEY and add region keys.",
+      "regions": {
+        "us-east1": {
+          "label": "US East (South Carolina)",
+          "group": "US",
+          "egress_gb": 0.12,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.02,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "nearline": {
+              "label": "Nearline",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "coldline": {
+              "label": "Coldline",
+              "storage_gb_mo": 0.004,
+              "retrieval_gb": 0.02,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.0012,
+              "retrieval_gb": 0.05,
+              "min_days": 365,
+              "object_lock": true
+            }
+          }
+        },
+        "europe-west1": {
+          "label": "Europe (Belgium)",
+          "group": "EU",
+          "egress_gb": 0.12,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.02,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "nearline": {
+              "label": "Nearline",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "coldline": {
+              "label": "Coldline",
+              "storage_gb_mo": 0.004,
+              "retrieval_gb": 0.02,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.0012,
+              "retrieval_gb": 0.05,
+              "min_days": 365,
+              "object_lock": true
+            }
+          }
+        }
+      }
+    },
+    "azure": {
+      "label": "Azure Blob (LRS)",
+      "note": "General Purpose v2, LRS. First 100 GB/mo egress free. Archive reads need rehydration (hours; priority 0.10/GB).",
+      "regions": {
+        "eastus": {
+          "label": "East US",
+          "group": "US",
+          "egress_gb": 0.087,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.0208,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.0152,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "westus2": {
+          "label": "West US 2",
+          "group": "US",
+          "egress_gb": 0.087,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.0184,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "westeurope": {
+          "label": "West Europe",
+          "group": "EU",
+          "egress_gb": 0.087,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.0196,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0045,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.0018,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "northeurope": {
+          "label": "North Europe",
+          "group": "EU",
+          "egress_gb": 0.087,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.022,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0036,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.00099,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "southeastasia": {
+          "label": "Southeast Asia",
+          "group": "AP",
+          "egress_gb": 0.12,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.02,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.011,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0045,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.002,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        },
+        "japaneast": {
+          "label": "Japan East",
+          "group": "AP",
+          "egress_gb": 0.12,
+          "tiers": {
+            "hot": {
+              "label": "Hot",
+              "storage_gb_mo": 0.02,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": true
+            },
+            "cool": {
+              "label": "Cool",
+              "storage_gb_mo": 0.011,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": true
+            },
+            "cold": {
+              "label": "Cold",
+              "storage_gb_mo": 0.0045,
+              "retrieval_gb": 0.03,
+              "min_days": 90,
+              "object_lock": true
+            },
+            "archive": {
+              "label": "Archive",
+              "storage_gb_mo": 0.002,
+              "retrieval_gb": 0.02,
+              "min_days": 180,
+              "object_lock": true
+            }
+          }
+        }
+      }
+    },
+    "gcore": {
+      "label": "Gcore S3",
+      "note": "Billed in € (Standard: €0.04/GB stored + €0.02/GB egress) — USD approximations shown. S3 Object Lock not documented — verify before trusting it with the immutable copy.",
+      "regions": {
+        "global": {
+          "label": "All locations",
+          "group": "GLOBAL",
+          "egress_gb": 0.022,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.044,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": "not documented"
+            }
+          }
+        }
+      }
+    },
+    "r2": {
+      "label": "Cloudflare R2",
+      "note": "Zero egress. Immutability is bucket-level lock only — no per-object S3 Object Lock.",
+      "regions": {
+        "global": {
+          "label": "All regions",
+          "group": "GLOBAL",
+          "egress_gb": 0,
+          "tiers": {
+            "standard": {
+              "label": "Standard",
+              "storage_gb_mo": 0.015,
+              "retrieval_gb": 0,
+              "min_days": 0,
+              "object_lock": "bucket-level"
+            },
+            "ia": {
+              "label": "Infrequent Access",
+              "storage_gb_mo": 0.01,
+              "retrieval_gb": 0.01,
+              "min_days": 30,
+              "object_lock": "bucket-level"
+            }
+          }
+        }
+      }
+    }
+  }
+}
