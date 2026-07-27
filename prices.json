@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-21",
+  "updated": "2026-07-27",
   "providers": {
     "aws": {
       "label": "AWS S3",
