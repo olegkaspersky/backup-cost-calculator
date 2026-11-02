@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-11-02",
   "providers": {
     "aws": {
       "label": "AWS S3",
@@ -381,14 +381,14 @@
           "tiers": {
             "hot": {
               "label": "Hot",
-              "storage_gb_mo": 0.0208,
+              "storage_gb_mo": 0.0184,
               "retrieval_gb": 0,
               "min_days": 0,
               "object_lock": true
             },
             "cool": {
               "label": "Cool",
-              "storage_gb_mo": 0.0152,
+              "storage_gb_mo": 0.01,
               "retrieval_gb": 0.01,
               "min_days": 30,
               "object_lock": true
@@ -416,28 +416,28 @@
           "tiers": {
             "hot": {
               "label": "Hot",
-              "storage_gb_mo": 0.0208,
+              "storage_gb_mo": 0.0196,
               "retrieval_gb": 0,
               "min_days": 0,
               "object_lock": true
             },
             "cool": {
               "label": "Cool",
-              "storage_gb_mo": 0.0152,
+              "storage_gb_mo": 0.01,
               "retrieval_gb": 0.01,
               "min_days": 30,
               "object_lock": true
             },
             "cold": {
               "label": "Cold",
-              "storage_gb_mo": 0.0036,
+              "storage_gb_mo": 0.0045,
               "retrieval_gb": 0.03,
               "min_days": 90,
               "object_lock": true
             },
             "archive": {
               "label": "Archive",
-              "storage_gb_mo": 0.00099,
+              "storage_gb_mo": 0.0018,
               "retrieval_gb": 0.02,
               "min_days": 180,
               "object_lock": true
@@ -451,14 +451,14 @@
           "tiers": {
             "hot": {
               "label": "Hot",
-              "storage_gb_mo": 0.0208,
+              "storage_gb_mo": 0.022,
               "retrieval_gb": 0,
               "min_days": 0,
               "object_lock": true
             },
             "cool": {
               "label": "Cool",
-              "storage_gb_mo": 0.0152,
+              "storage_gb_mo": 0.01,
               "retrieval_gb": 0.01,
               "min_days": 30,
               "object_lock": true
@@ -486,28 +486,28 @@
           "tiers": {
             "hot": {
               "label": "Hot",
-              "storage_gb_mo": 0.0208,
+              "storage_gb_mo": 0.02,
               "retrieval_gb": 0,
               "min_days": 0,
               "object_lock": true
             },
             "cool": {
               "label": "Cool",
-              "storage_gb_mo": 0.0152,
+              "storage_gb_mo": 0.011,
               "retrieval_gb": 0.01,
               "min_days": 30,
               "object_lock": true
             },
             "cold": {
               "label": "Cold",
-              "storage_gb_mo": 0.0036,
+              "storage_gb_mo": 0.0045,
               "retrieval_gb": 0.03,
               "min_days": 90,
               "object_lock": true
             },
             "archive": {
               "label": "Archive",
-              "storage_gb_mo": 0.00099,
+              "storage_gb_mo": 0.002,
               "retrieval_gb": 0.02,
               "min_days": 180,
               "object_lock": true
@@ -521,28 +521,28 @@
           "tiers": {
             "hot": {
               "label": "Hot",
-              "storage_gb_mo": 0.0208,
+              "storage_gb_mo": 0.02,
               "retrieval_gb": 0,
               "min_days": 0,
               "object_lock": true
             },
             "cool": {
               "label": "Cool",
-              "storage_gb_mo": 0.0152,
+              "storage_gb_mo": 0.011,
               "retrieval_gb": 0.01,
               "min_days": 30,
               "object_lock": true
             },
             "cold": {
               "label": "Cold",
-              "storage_gb_mo": 0.0036,
+              "storage_gb_mo": 0.0045,
               "retrieval_gb": 0.03,
               "min_days": 90,
               "object_lock": true
             },
             "archive": {
               "label": "Archive",
-              "storage_gb_mo": 0.00099,
+              "storage_gb_mo": 0.002,
               "retrieval_gb": 0.02,
               "min_days": 180,
               "object_lock": true
